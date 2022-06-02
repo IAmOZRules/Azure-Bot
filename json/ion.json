@@ -1,0 +1,79 @@
+{
+    "intents": [
+        {
+            "tag": "triplepoint_version",
+            "patterns": [
+                "what is the version of triplepoint",
+                "what version is triplepoint running",
+                "what is the latest version of triplepoint",
+                "I want to know the latest version of triplepoint",
+                "I would like to know the latest version of triplepoint"
+            ]
+        },
+        {
+            "tag": "triplepoint_support",
+            "patterns": [
+                "how do I get support for triplepoint",
+                "I would like to get some support for triplepoint",
+                "I want to get some support for triplepoint",
+                "How do I get support for triplepoint"
+            ]
+        },
+        {
+            "tag": "triplepoint_license",
+            "patterns": [
+                "who do I contact for a triplepoint license",
+                "how can I get a license for triplepoint",
+                "I would like to get a license for triplepoint",
+                "I want to get a license for triplepoint"
+            ]
+        },
+        {
+            "tag": "fidessa_version",
+            "patterns": [
+                "what is the version of fidessa",
+                "what version is fidessa running",
+                "what is the latest version of fidessa",
+                "I want to know the latest version of fidessa",
+                "I would like to know the latest version of fidessa"
+            ]
+        },
+        {
+            "tag": "fidessa_support",
+            "patterns": [
+                "how do I get support for fidessa",
+                "I would like to get some support for fidessa",
+                "I want to get some support for fidessa",
+                "How do I get support for fidessa"
+            ]
+        },
+        {
+            "tag": "fidessa_license",
+            "patterns": [
+                "who do I contact for a fidessa license",
+                "how can I get a license for fidessa",
+                "I would like to get a license for fidessa",
+                "I want to get a license for fidessa"
+            ]
+        },
+        {
+            "tag": "ion_information",
+            "patterns": [
+                "what is ION?",
+                "I want to know about ION",
+                "I would like to know about ION",
+                "Tell me more about ION"
+            ]
+        },
+        {
+            "tag": "product_information",
+            "patterns": [
+                "what products does ION offer",
+                "what products does ION have",
+                "what products does ION have to offer",
+                "I want to know about the products ION offers",
+                "I would like to know about the products ION offers"
+            ]
+        }
+    ]
+}
