@@ -12,6 +12,7 @@ This sample **requires** prerequisites in order to run.
 
 ## Running the sample
 - Run `pip install -r requirements.txt` to install all dependencies
+- Run `python train.py`
 - Run `python app.py`
 
 
