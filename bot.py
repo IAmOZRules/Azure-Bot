@@ -38,7 +38,7 @@ class Products():
 
     def handle_version(self) -> str:
         sql = '''
-            SELECT version from product_details as pd JOIN product_versions as pv ON pd.latest_version = pv.id JOIN products ON products.product_id = pd.product_id WHERE products.name = "%s"";
+            SELECT version from product_details as pd JOIN product_versions as pv ON pd.latest_version = pv.id JOIN products ON products.product_id = pd.product_id WHERE products.name = "%s";
         '''
         cursor = db.cursor()
         cursor.execute(sql % self.product_name)
@@ -49,7 +49,7 @@ class Products():
 
     def handle_license(self) -> str:
         sql = '''
-            SELECT license_contact FROM product_details as pd JOIN products ON products.product_id = pd.product_id WHERE products.name = "%s"";
+            SELECT license_contact FROM product_details as pd JOIN products ON products.product_id = pd.product_id WHERE products.name = "%s";
         '''
         cursor = db.cursor()
         cursor.execute(sql % self.product_name)
@@ -60,7 +60,7 @@ class Products():
 
     def handle_support(self) -> str:
         sql = '''
-            SELECT url FROM product_details as pd JOIN products ON products.product_id = pd.product_id WHERE products.name = "%s"";
+            SELECT url FROM product_details as pd JOIN products ON products.product_id = pd.product_id WHERE products.name = "%s";
         '''
         cursor = db.cursor()
         cursor.execute(sql % self.product_name)
