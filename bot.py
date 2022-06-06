@@ -5,8 +5,9 @@ from tokenize import String
 from botbuilder.core import ActivityHandler, TurnContext, MessageFactory
 from botbuilder.schema import ChannelAccount, CardAction, ActionTypes, SuggestedActions
 from chat import get_response
+import MySQLdb
 
-
+db = MySQLdb.connect(host="localhost:3307", user="root", passwd="2187", db="ion_demo")
 class Products():
     def __init__(self):
         self.product_name = ""
@@ -36,13 +37,37 @@ class Products():
             return self.handle_license()
 
     def handle_version(self) -> str:
-        return f"{self.product_name.capitalize()} is currently on v{self.fake_database['version'][self.product_name]}."
+        sql = '''
+            SELECT version from product_details as pd JOIN product_versions as pv ON pd.latest_version = pv.id JOIN products ON products.product_id = pd.product_id WHERE products.name = "%s"";
+        '''
+        cursor = db.cursor()
+        cursor.execute(sql % self.product_name)
+        result = cursor.fetchone()
+        data = result[0]
+
+        return f"{self.product_name.capitalize()} is currently on v{data}."
 
     def handle_license(self) -> str:
-        return self.fake_database["support"][self.product_name]
+        sql = '''
+            SELECT license_contact FROM product_details as pd JOIN products ON products.product_id = pd.product_id WHERE products.name = "%s"";
+        '''
+        cursor = db.cursor()
+        cursor.execute(sql % self.product_name)
+        result = cursor.fetchone()
+        data = result[0]
+
+        return f"Please contact {data} for {self.product_name.capitalize()} license information."
 
     def handle_support(self) -> str:
-        return self.fake_database["license"][self.product_name]
+        sql = '''
+            SELECT url FROM product_details as pd JOIN products ON products.product_id = pd.product_id WHERE products.name = "%s"";
+        '''
+        cursor = db.cursor()
+        cursor.execute(sql % self.product_name)
+        result = cursor.fetchone()
+        data = result[0]
+
+        return f"Please visit {data} for more information."
 
 
 class MyBot(ActivityHandler):
