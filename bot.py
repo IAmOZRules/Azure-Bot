@@ -4,10 +4,12 @@
 from tokenize import String
 from botbuilder.core import ActivityHandler, TurnContext, MessageFactory
 from botbuilder.schema import ChannelAccount, CardAction, ActionTypes, SuggestedActions
-from chat import get_response
+# from chat import get_response
 import MySQLdb
+import requests
+import json
 
-db = MySQLdb.connect(host="localhost:3307", user="root", passwd="2187", db="ion_demo")
+db = MySQLdb.connect(host="localhost", user="root", passwd="2187", db="ion_demo")
 class Products():
     def __init__(self):
         self.product_name = ""
@@ -79,12 +81,15 @@ class MyBot(ActivityHandler):
 
     async def on_message_activity(self, turn_context: TurnContext):
         text: str = turn_context.activity.text.lower()
-        intent = get_response(text)
 
-        if "triplepoint" in intent:
-            self.ProductObj.product_name = "triplepoint"
-        elif "fidessa" in intent:
-            self.ProductObj.product_name = "fidessa"
+        query = json.dumps({"text": text})
+        response = requests.post("http://localhost:5005/model/parse", query).json()
+        intent = response['intent']['name']
+        print("intent: %s" % intent)
+        if len(response['entities']) > 0:
+            self.ProductObj.product_name = response['entities'][0]['value']
+            print("product name: %s" % self.ProductObj.product_name)
+
 
         if text == "ion" or intent == "ion_information":
             await turn_context.send_activity("Ion is a great organization!\nMore information at https://iongroup.com/.")
@@ -95,11 +100,11 @@ class MyBot(ActivityHandler):
         elif text == "fidessa" or text == "triplepoint":
             self.ProductObj.product_name = text
             await self.send_product_info_cards(turn_context)
-        elif "version" in intent:
+        elif intent == "product_version":
             await turn_context.send_activity(self.ProductObj.handle_version())
-        elif "license" in intent:
+        elif intent == "product_license":
             await turn_context.send_activity(self.ProductObj.handle_license())
-        elif "support" in intent:
+        elif intent == "product_support":
             await turn_context.send_activity(self.ProductObj.handle_support())
         else:
             await turn_context.send_activity("I'm sorry, I don't understand that.")
